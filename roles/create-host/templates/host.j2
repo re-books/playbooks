@@ -18,7 +18,7 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    root {{ app_directory }}/public;
+    root /home/{{ www_user }}/{{ app_hostname }}/public;
     index index.php index.html;
 
     server_name {{ app_hostname }};
