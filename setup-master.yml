@@ -1,6 +1,8 @@
 - hosts: master
   become: true
   connection: local
+  vars:
+    allow_world_readable_tmpfiles: true
 
   roles:
     - install-nginx
