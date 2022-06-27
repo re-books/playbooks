@@ -1,8 +1,8 @@
-#- name: create wwwuser group
-#  group:
-#    name: "{{ www_user }}"
-#    state: present
-#    system: true
+- name: create www user's group
+  group:
+    name: "{{ www_user }}"
+    state: present
+    system: true
 
 - name: create www user
   user:

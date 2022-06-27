@@ -22,7 +22,9 @@ sudo git clone https://github.com/ouest-code/playbooks.git $PLAYBOOKS_WD
 
 cd $PLAYBOOKS_WD || exit
 
-ansible-playbook setup-master.yml \
+cp hosts.example.ini hosts.ini
+
+ansible-playbook -i hosts.ini setup-master.yml \
   -e playbooks_wd=$PLAYBOOKS_WD \
   -e app_hostname=$APP_HOSTNAME \
   -e app_repository=$APP_REPOSITORY \
