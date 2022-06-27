@@ -33,10 +33,10 @@
     creates: /etc/letsencrypt/live/{{ app_hostname }}
 
 - name: uncomment certificate line in host
-    replace:
-      path: /etc/nginx/sites-available/{{ app_hostname }}
-      regexp: '{{ item.from }}'
-      replace: "{{ item.to }}"
+  replace:
+    path: /etc/nginx/sites-available/{{ app_hostname }}
+    regexp: '{{ item.from }}'
+    replace: "{{ item.to }}"
   with_items:
     - {from: '^#    ssl_certificate(.*)$', to: '     ssl_certificate\1'}
     - {from: '^#    ssl_certificate_key(.*)$', to: '     ssl_certificate_key\1'}
