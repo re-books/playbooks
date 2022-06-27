@@ -44,8 +44,8 @@ server {
         include fastcgi_params;
     }
 
-    ssl_certificate /etc/letsencrypt/live/{{ app_hostname }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{ app_hostname }}/privkey.pem;
+#    ssl_certificate /etc/letsencrypt/live/{{ app_hostname }}/fullchain.pem;
+#    ssl_certificate_key /etc/letsencrypt/live/{{ app_hostname }}/privkey.pem;
 
     ssl_session_cache shared:le_nginx_SSL:10m;
     ssl_session_timeout 1440m;
