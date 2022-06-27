@@ -10,6 +10,6 @@
     - install-mysql
     - create-database-user
     - create-database
-    - create-vhost
+    - create-host
     - install-app
     #- init-pilot

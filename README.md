@@ -5,7 +5,6 @@
 You should SSH into your server as sudoer and run the following commands in your terminal :
 
 ```bash
-# config
 PLAYBOOKS_WD=/srv/playbooks
 APP_HOSTNAME=pilot.example.com
 APP_REPOSITORY=https://github.com/ouest-code/pilot.git
@@ -17,9 +16,9 @@ MYSQL_PASSWORD="$(date +%s | sha256sum | base64 | head -c 32 ; echo)"
 MYSQl_DATABASE=pilot
 CERTBOT_EMAIL=admin@pilot.example.com
 
-sudo apt update && install -y ansible git
+sudo apt update && sudo apt install -y ansible git
 
-git clone https://github.com/ouest-code/playbooks.git $PLAYBOOKS_WD
+sudo git clone https://github.com/ouest-code/playbooks.git $PLAYBOOKS_WD
 
 cd $PLAYBOOKS_WD || exit
 
