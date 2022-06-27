@@ -1,0 +1,39 @@
+- name: add repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+    update_cache: yes
+
+- name: install package
+  apt:
+    name: "php{{ php_version }}-fpm"
+    state: present
+    update_cache: yes
+    install_recommends: no
+
+- name: install extensions
+  apt:
+    name: "{{ php_packages | list }}"
+    state: present
+    install_recommends: no
+
+- name: change default version
+  alternatives:
+    name: php
+    path: /usr/bin/php{{ php_version }}
+
+- name: define www user as php-fpm's default user
+  replace:
+    path: "/etc/php/{{ php_version }}/fpm/pool.d/www.conf"
+    regexp: '{{ item.from }}'
+    replace: "{{ item.to }}"
+  with_items:
+    - {from: '^user = (.+)$', to: 'user = {{ www_user }}'}
+    - {from: '^group = (.+)$', to: 'group = {{ www_user }}'}
+    - {from: '^listen.owner = (.+)$', to: 'listen.owner = {{ www_user }}'}
+    - {from: '^listen.group = (.+)$', to: 'listen.group = {{ www_user }}'}
+
+- name: restart php-fpm
+  service:
+    name: php{{ php_version }}-fpm
+    state: restarted

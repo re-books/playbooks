@@ -1,0 +1,15 @@
+- hosts: master
+  become: true
+  connection: local
+
+  roles:
+    - install-nginx
+    - install-certbot
+    - add-www-user
+    - install-php
+    - install-mysql
+    - create-database-user
+    - create-database
+    - create-vhost
+    - install-app
+    #- init-pilot

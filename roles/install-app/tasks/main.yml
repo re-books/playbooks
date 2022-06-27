@@ -1,0 +1,29 @@
+- name: remove temporary directory
+  file:
+    path: "/home/{{ www_user }}/{{ app_hostname }}"
+    state: absent
+
+- name: clone repository
+  git:
+    repo: "{{ app_repository }}"
+    dest: "/home/{{ www_user }}/{{ app_hostname }}"
+    version: master
+  become_user: "{{ www_user }}"
+
+- name: copy config file
+  copy:
+    src: "/home/{{ www_user }}/{{ app_hostname }}/.env.example"
+    dest: "/home/{{ www_user }}/{{ app_hostname }}/.env"
+    version: master
+  become_user: "{{ www_user }}"
+
+- name: config env
+  replace:
+    path: "/home/{{ www_user }}/{{ app_hostname }}/.env"
+    regexp: '{{ item.from }}'
+    replace: "{{ item.to }}"
+  with_items:
+    - {from: '^APP_URL=(.+)$', to: 'APP_URL=https://{{ app_hostname }}'}
+    - {from: '^APP_ENV=(.+)$', to: 'APP_ENV=production'}
+    - {from: '^APP_DEBUG=(.+)$', to: 'APP_DEBUG=false'}
+  become_user: "{{ www_user }}"

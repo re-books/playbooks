@@ -1,0 +1,23 @@
+#- name: create wwwuser group
+#  group:
+#    name: "{{ www_user }}"
+#    state: present
+#    system: true
+
+- name: create www user
+  user:
+    name: "{{ www_user }}"
+    group: "{{ www_user }}"
+    comment: "Web user"
+    shell: /bin/bash
+    home: "/home/{{ www_user }}"
+    system: true
+    state: present
+
+- name: add permission to www user to reload php-fpm
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^{{ www_user }} ALL=NOPASSWD: /usr/sbin/service php{{ php_version }}-fpm reload$'
+    line: '{{ www_user }} ALL=NOPASSWD: /usr/sbin/service php{{ php_version }}-fpm reload'
+    validate: 'visudo -cf %s'

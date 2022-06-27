@@ -1,0 +1,7 @@
+- name: create database user
+  mysql_user:
+    name: '{{ mysql_user }}'
+    password: '{{ mysql_password }}'
+    host: 'localhost'
+    login_user: root
+    login_password: '{{ mysql_root_password }}'

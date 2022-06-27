@@ -1,0 +1,39 @@
+- name: create app directory
+  file:
+    path: '/home/{{ www_user }}/{{ app_hostname }}/public'
+    state: directory
+    recurse: yes
+  become_user: "{{ www_user }}"
+
+- name: copy default index
+  template:
+    src: index.php.j2
+    dest: '/home/{{ www_user }}/{{ app_hostname }}/public/index.php'
+  become_user: "{{ www_user }}"
+
+- name: add host
+  template:
+    src: host.j2
+    dest: /etc/nginx/sites-available/{{ app_hostname }}
+
+- name: enable host
+  file:
+    src: /etc/nginx/sites-available/{{ app_hostname }}
+    dest: /etc/nginx/sites-enabled/{{ app_hostname }}
+    state: link
+
+- name: reload nginx to active new host
+  service:
+    name: nginx
+    state: restarted
+
+- name: create letsencrypt certificate
+  shell: letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ certbot_email }} --agree-tos -d {{ app_hostname }}
+  args:
+    creates: /etc/letsencrypt/live/{{ app_hostname }}
+
+- name: add letsencrypt's cronjob for cert renewal
+  cron:
+    name: Letsencrypt renewal for {{ app_hostname }}
+    special_time: weekly
+    job: letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ certbot_email }} --agree-tos -d {{ app_hostname }} && service nginx reload

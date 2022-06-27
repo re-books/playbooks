@@ -1,0 +1,26 @@
+- name: install packages
+  apt:
+    name:
+      - mariadb-server
+      - libmysqlclient-dev
+    state: present
+    update_cache: yes
+
+- name: install python client
+  pip:
+    name: mysqlclient
+    state: present
+
+- name: ensure service is start
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: change root password
+  mysql_user:
+    name: root
+    password: '{{ mysql_root_password }}'
+    host: 'localhost'
+    login_user: root
+    login_password: ''

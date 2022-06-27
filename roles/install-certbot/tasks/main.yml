@@ -1,0 +1,17 @@
+- name: install package
+  apt:
+    name:
+      - letsencrypt
+      - python3-certbot-nginx
+    state: present
+    update_cache: yes
+
+- name: create letsencrypt's challenge directory
+  file:
+    name: /var/www/letsencrypt
+    state: directory
+
+- name: generate letsencrypt's dhparams
+  shell: openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
+  args:
+    creates: /etc/letsencrypt/ssl-dhparams.pem
