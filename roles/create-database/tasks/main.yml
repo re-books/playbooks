@@ -2,13 +2,9 @@
   mysql_db:
     name: '{{ mysql_database }}'
     state: present
-    login_user: root
-    login_password: '{{ mysql_root_password }}'
 
 - name: add priv to mysql user
   mysql_user:
     name: '{{ mysql_user }}'
     priv: '{{ mysql_database }}.*:ALL,GRANT'
     append_privs: yes
-    login_user: root
-    login_password: '{{ mysql_root_password }}'

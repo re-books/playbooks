@@ -13,7 +13,7 @@ WWW_USER=pilot
 MYSQL_ROOT_PASSWORD="$(date +%s | sha256sum | base64 | head -c 32 ; echo)"
 MYSQL_USER=pilot
 MYSQL_PASSWORD="$(date +%s | sha256sum | base64 | head -c 32 ; echo)"
-MYSQl_DATABASE=pilot
+MYSQL_DATABASE=pilot
 CERTBOT_EMAIL=admin@pilot.example.com
 
 sudo apt update && sudo apt install -y ansible git

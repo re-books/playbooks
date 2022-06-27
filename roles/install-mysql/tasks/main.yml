@@ -23,5 +23,9 @@
     name: root
     password: '{{ mysql_root_password }}'
     host: 'localhost'
-    login_user: root
-    login_password: ''
+
+- name: write root credentials
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    mode: '0600'
