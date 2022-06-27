@@ -1,20 +1,4 @@
 server {
-    listen 80;
-    listen [::]:80;
-
-    server_name {{ app_hostname }};
-
-    location /.well-known/acme-challenge {
-        root /var/www/letsencrypt;
-        try_files $uri $uri/ =404;
-    }
-
-    location / {
-        rewrite ^ https://{{ app_hostname }}$request_uri? permanent;
-    }
-}
-
-server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
@@ -44,8 +28,8 @@ server {
         include fastcgi_params;
     }
 
-#    ssl_certificate /etc/letsencrypt/live/{{ app_hostname }}/fullchain.pem;
-#    ssl_certificate_key /etc/letsencrypt/live/{{ app_hostname }}/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/{{ app_hostname }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ app_hostname }}/privkey.pem;
 
     ssl_session_cache shared:le_nginx_SSL:10m;
     ssl_session_timeout 1440m;

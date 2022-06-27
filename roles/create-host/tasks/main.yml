@@ -11,15 +11,15 @@
     dest: '/home/{{ www_user }}/{{ app_hostname }}/public/index.php'
   become_user: "{{ www_user }}"
 
-- name: add host
+- name: add http host
   template:
-    src: host.j2
-    dest: /etc/nginx/sites-available/{{ app_hostname }}
+    src: host-http.j2
+    dest: /etc/nginx/sites-available/{{ app_hostname }}-http
 
-- name: enable host
+- name: enable http host
   file:
-    src: /etc/nginx/sites-available/{{ app_hostname }}
-    dest: /etc/nginx/sites-enabled/{{ app_hostname }}
+    src: /etc/nginx/sites-available/{{ app_hostname }}-http
+    dest: /etc/nginx/sites-enabled/{{ app_hostname }}-http
     state: link
 
 - name: reload nginx to active new host
@@ -32,14 +32,21 @@
   args:
     creates: /etc/letsencrypt/live/{{ app_hostname }}
 
-- name: uncomment certificate line in host
-  replace:
-    path: /etc/nginx/sites-available/{{ app_hostname }}
-    regexp: '{{ item.from }}'
-    replace: "{{ item.to }}"
-  with_items:
-    - {from: '^#    ssl_certificate(.*)$', to: '     ssl_certificate\1'}
-    - {from: '^#    ssl_certificate_key(.*)$', to: '     ssl_certificate_key\1'}
+- name: add https host
+  template:
+    src: host-https.j2
+    dest: /etc/nginx/sites-available/{{ app_hostname }}-https
+
+- name: enable https host
+  file:
+    src: /etc/nginx/sites-available/{{ app_hostname }}-https
+    dest: /etc/nginx/sites-enabled/{{ app_hostname }}-https
+    state: link
+
+- name: reload nginx to active new host
+  service:
+    name: nginx
+    state: restarted
 
 - name: reload nginx to active new host
   service:
