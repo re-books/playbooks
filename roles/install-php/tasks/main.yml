@@ -33,12 +33,17 @@
     - {from: '^listen.owner = (.+)$', to: 'listen.owner = {{ www_user }}'}
     - {from: '^listen.group = (.+)$', to: 'listen.group = {{ www_user }}'}
 
-- name: install composer
-  command:
-    cm: php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
-    creates: /usr/bin/composer
-
 - name: restart php-fpm
   service:
     name: php{{ php_version }}-fpm
     state: restarted
+
+- name: copy composer installer
+  template:
+    src: composer-installer.j2
+    dest: /usr/local/sbin/composer-installer
+
+- name: install composer
+  shell: /usr/local/sbin/composer-installer
+  args:
+    creates: /usr/local/bin/composer
