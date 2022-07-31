@@ -1,0 +1,5 @@
+- name: Attach ssh key to Web user
+  authorized_key:
+    user: "{{ www_user }}"
+    state: present
+    key: "{{ lookup('file', pub_key) }}"

@@ -32,3 +32,13 @@ ansible-playbook -i hosts.ini playbook.yml --tags "new-app" \
   -e mysql_password="$DB_PASSWORD" \
   -e certbot_email="$CERTBOT_EMAIL"
 ```
+
+# Add ssh key
+
+```bash
+PUB_KEY=/tmp/pub.key # Copy your pub key in this file
+
+ansible-playbook -i hosts.ini playbook.yml --tags "add-ssh-key" \
+  -e pub_key=$PUB_KEY
+```
+

@@ -11,3 +11,4 @@
     - {role: 'create-database', tags: 'new-app'}
     - {role: 'create-database-user', tags: 'new-app'}
     - {role: 'create-host', tags: 'new-app'}
+    - {role: 'add-ssh-key', tags: 'add-ssh-key'}
