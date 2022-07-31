@@ -14,7 +14,6 @@ cd $PLAYBOOKS_WD || exit
 sudo cp hosts.example.ini hosts.ini
 
 ansible-playbook -i hosts.ini playbook.yml --tags "setup" \
-  -e playbooks_wd=$PLAYBOOKS_WD \
   -e php_version=$PHP_VERSION \
   -e www_user=$WWW_USER \
   -e mysql_root_password="$MYSQL_ROOT_PASSWORD"

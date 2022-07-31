@@ -42,6 +42,7 @@
   template:
     src: composer-installer.j2
     dest: /usr/local/sbin/composer-installer
+    mode: 0750
 
 - name: install composer
   shell: /usr/local/sbin/composer-installer
