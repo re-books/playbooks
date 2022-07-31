@@ -8,8 +8,3 @@
     - add-www-user
     - install-php
     - install-mysql
-    - create-database-user
-    - create-database
-    - create-host
-    - install-app
-    #- init-pilot
