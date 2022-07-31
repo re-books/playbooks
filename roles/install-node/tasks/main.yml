@@ -8,14 +8,13 @@
     repo: "{{ item }}"
     state: present
   with_items:
-    - "deb https://deb.nodesource.com/{{ node_version }} {{ ansible_distribution_release }} main"
-    - "deb-src https://deb.nodesource.com/{{ node_version }} {{ ansible_distribution_release }} main"
+    - "deb https://deb.nodesource.com/node_{{ node_version }} {{ ansible_distribution_release }} main"
+    - "deb-src https://deb.nodesource.com/node_{{ node_version }} {{ ansible_distribution_release }} main"
 
 - name: install package
   apt:
     name:
       - nodejs
-      - npm
     state: present
     update_cache: yes
     install_recommends: no
