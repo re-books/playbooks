@@ -8,3 +8,6 @@
     - {role: 'add-www-user', tags: 'setup'}
     - {role: 'install-php', tags: 'setup'}
     - {role: 'install-mysql', tags: 'setup'}
+    - {role: 'create-database', tags: 'new-app'}
+    - {role: 'create-database-user', tags: 'new-app'}
+    - {role: 'create-host', tags: 'new-app'}

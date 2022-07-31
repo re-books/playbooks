@@ -1,6 +1,6 @@
 - name: create app directory
   file:
-    path: '/home/{{ www_user }}/{{ app_hostname }}/public'
+    path: "{{ app_directory }}"
     state: directory
     recurse: yes
   become_user: "{{ www_user }}"
@@ -8,7 +8,7 @@
 - name: copy default index
   template:
     src: index.php.j2
-    dest: '/home/{{ www_user }}/{{ app_hostname }}/public/index.php'
+    dest: "{{ app_directory }}/index.php"
   become_user: "{{ www_user }}"
 
 - name: add http host
