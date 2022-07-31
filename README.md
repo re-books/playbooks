@@ -33,12 +33,13 @@ ansible-playbook -i hosts.ini playbook.yml --tags "new-app" \
   -e certbot_email="$CERTBOT_EMAIL"
 ```
 
-# Add ssh key
+## Add ssh key
 
 ```bash
+WWW_USER=pilot
 PUB_KEY=/tmp/pub.key # Copy your pub key in this file
 
 ansible-playbook -i hosts.ini playbook.yml --tags "add-ssh-key" \
-  -e pub_key=$PUB_KEY
+  -e pub_key=$PUB_KEY \
+  -e www_user=$WWW_USER
 ```
-
