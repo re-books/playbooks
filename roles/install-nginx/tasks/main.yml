@@ -4,3 +4,11 @@
       - nginx
     state: present
     update_cache: yes
+
+- name: define www user as default user
+  replace:
+    path: "/etc/nginx/nginx.conf"
+    regexp: '{{ item.from }}'
+    replace: "{{ item.to }}"
+  with_items:
+    - {from: '^user (.+);$', to: 'user {{ www_user }};'}
